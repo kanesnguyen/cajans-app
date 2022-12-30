@@ -4,7 +4,7 @@ import { useNavigate } from "@shopify/app-bridge-react";
 import translations from "@shopify/polaris/locales/en.json";
 import "@shopify/polaris/build/esm/styles.css";
 
-function AppBridgeLink({ url, children, external, ...rest }) {
+function AppBridgeLink({ color, url, children, external, ...rest }) {
   const navigate = useNavigate();
   const handleClick = useCallback(() => {
     navigate(url);
@@ -49,7 +49,11 @@ function AppBridgeLink({ url, children, external, ...rest }) {
  */
 export function PolarisProvider({ children }) {
   return (
-    <AppProvider i18n={translations} linkComponent={AppBridgeLink}>
+    <AppProvider
+      i18n={translations}
+      linkComponent={AppBridgeLink}
+      
+    >
       {children}
     </AppProvider>
   );

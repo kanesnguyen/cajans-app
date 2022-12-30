@@ -75,7 +75,7 @@ export function AppBridgeProvider({ children }) {
       <Page narrowWidth>
         <Layout>
           <Layout.Section>
-            <div style={{ marginTop: "100px" }}>
+            <div style={{ marginTop: "100px", backgroundColor:'red' }} >
               <Banner {...bannerProps} status="critical" />
             </div>
           </Layout.Section>
@@ -85,7 +85,7 @@ export function AppBridgeProvider({ children }) {
   }
 
   return (
-    <Provider config={appBridgeConfig} router={routerConfig}>
+    <Provider config={appBridgeConfig} router={routerConfig} theme={{color: {success :'red'}}}>
       {children}
     </Provider>
   );

@@ -1,0 +1,135 @@
+<div class="container" data-id="{{ block.id }}" id="tabs_container">
+  <div class="tabs">
+    {%- if block.settings.tab_one -%}
+      <input
+        type="radio"
+        id="radio-1"
+        name="tabs"
+        checked />
+      <label class="tab" id="label-1" for="radio-1">{{ block.settings.tab_one }}</label>
+    {%- else -%}
+      <input
+        type="radio"
+        id="radio-1"
+        name="tabs"
+        checked />
+      <label class="tab" id="label-1" for="radio-1">Shipping</label>
+    {%- endif -%}
+
+    {%- if block.settings.tab_two -%}
+      <input
+        type="radio"
+        id="radio-2"
+        name="tabs"
+        />
+      <label class="tab" id="label-2" for="radio-2">{{ block.settings.tab_two }}</label>
+    {%- else -%}
+      <input
+        type="radio"
+        id="radio-2"
+        name="tabs"
+         />
+      <label class="tab" id="label-2" for="radio-2">Discount {{ product.price }}</label>
+    {%- endif -%}
+    <span class="glider"></span>
+  </div>
+  </div>
+  <div id="content_tab">
+    
+  </div>
+</div>
+
+<style>
+    .glider, .content_tab .box_icon, .content_tab .line, .selected_text, .select_methods, .box_tab .header .content  {
+        background-color: {{ block.settings.backgroundColor_active }}
+    }
+    input[type="radio"]:checked + label, .selected_text span , .selected_text svg, .box_tab .header .content {
+        color: {{ block.settings.color_text_active }}
+    }
+    .content_tab .box p , .content_tab .box h2 {
+        color: {{ block.settings.backgroundColor_active }}
+    }
+    .option:hover {
+        background-color: {{ block.settings.color_text_active }}; 
+    }
+    .option:hover > span {
+        color: {{ block.settings.backgroundColor_active }};
+        font-weight: 600;
+    }
+    
+    .box_tab .header .content, .box_tab .infor .content {
+      border: 1px solid {{ block.settings.backgroundColor_active }};
+    }
+    .box_tab .header .content:nth-child(1) {
+      border-radius: {{ block.settings.radius }}px 0 0 0;
+    }
+    .box_tab .header .content:nth-child(2) {
+      border-radius: 0 {{ block.settings.radius }}px 0 0;
+    }
+    .box_tab .infor .content:nth-child(1) {
+      border-radius: 0 0 0 {{ block.settings.radius }}px;
+    }
+    .box_tab .infor .content:nth-child(2) {
+      border-radius: 0 0 {{ block.settings.radius }}px 0;
+    }
+    .tabs, .tab, .glider, .selected_text {
+        border-radius: {{ 20 | times: 2 }}px;
+    }
+    .selected_text.select_list {
+        border-radius: {{ block.settings.radius }}px {{ block.settings.radius }}px 0 0;
+    }
+    .option:last-child {
+    border-radius:0 0 {{ block.settings.radius }}px {{ block.settings.radius }}px  ;
+    }
+
+    .select_methods {
+      border-radius: {{ block.settings.radius }}px ;
+    }
+</style>
+<script>
+  if(typeof(jQuery) === 'undefined') {
+      var jQueryScript = document.createElement('script');
+      jQueryScript.setAttribute('src','https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js');
+      document.head.appendChild(jQueryScript);
+}
+</script>
+{% schema %}
+  {
+    "name": "Picker Kanes",
+    "target": "section",
+    "stylesheet": "tabs.css",
+    "javascript": "tabs.js",
+    "settings": [
+      {
+        "type": "text",
+        "id": "tab_one",
+        "label": "Tab One",
+        "default": "Shipping"
+      }, {
+        "type": "text",
+        "id": "tab_two",
+        "label": "Tab Two",
+        "default": "Discount"
+      }, {
+        "type": "text",
+        "id": "backgroundColor_active",
+        "label": "Background Tab Active",
+        "default": "#0e1b4d"
+      }, {
+        "type": "text",
+        "id": "color_text_active",
+        "label": "Color Text Active",
+        "default": "#fff"
+      }, {
+        "type": "range",
+        "id": "radius",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Rounded Content",
+        "default": 20
+      }
+    ]
+  }
+{% endschema %}

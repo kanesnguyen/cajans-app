@@ -1,0 +1,152 @@
+.container {
+    max-width: 44rem;
+}
+.tabs {
+    display: flex;
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0 0 1px 0 rgba(24, 94, 224, 0.15), 0 6px 12px 0 rgba(24, 94, 224, 0.15);
+    padding: 0.75rem;
+    margin-bottom:20px;
+}
+.tabs * {
+    z-index: 2;
+}
+input[type="radio"] {
+    display: none;
+}
+.tab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 54px;
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.15s ease-in;
+}
+label.tab  {
+    font-weight: 700;
+}
+input[id="radio-1"]:checked ~ .glider {
+    transform: translateX(0);
+}
+input[id="radio-2"]:checked ~ .glider {
+    transform: translateX(100%);
+}
+.glider {
+    position: absolute;
+    display: flex;
+    height: 54px;
+    width: calc((100% / 2) - 8px);
+    z-index: 1;
+    transition: 0.25s ease-out;
+}
+.content_tab {
+    position: relative;
+}
+.content_tab .line {
+    height: 4px;
+    width: 80%;
+    position: absolute;
+    display: block !important;
+    margin: 0 auto;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 42%;
+    z-index: -1;
+}
+.content_tab .box {
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    flex-direction: column;
+}
+.content_tab .box_icon {
+    padding : 10px;
+    border-radius: 50%;
+} 
+.content_tab .box p {
+    font-weight: 700;
+}
+.content_tab .box h2 {
+    font-size: 1.25rem;
+}
+.content_tab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+    margin: 20px auto;
+}
+.select_methods {
+    width: 40%;
+}
+.selected_text  {
+    padding: 3px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all .15s ease-in-out;
+    cursor: pointer;
+    min-width: 180px;
+}
+.selected_text span {
+    font-size: 1.3rem;
+    margin: 0;
+}
+.selected_text svg {
+    transition: all .2s ease-in-out;
+}
+.selected_text svg.select_list {
+    transform: rotate(90deg);
+}
+.options {
+    height: 0;
+    opacity: 0;
+    transition: all .2s ease-in-out;
+}
+.selected_text.option {
+    border-radius: 0;
+    padding: 0 15px;
+    transition: all .2s ease-in-out;
+    height: 0;
+    opacity: 0;
+}
+.options.dropdown, .options.dropdown .option {
+    height: 100%;
+    opacity: 1;
+}
+.select_methods {
+    padding: 5px 0
+}
+
+.box_tab {
+    margin: 20px 0 0 0;
+}
+.box_tab .header, .box_tab .infor {
+    display:flex;
+    padding: 0;
+    
+  }
+  .box_tab .header .content {
+    width:50%;
+    height: 50px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .box_tab .infor .content {
+    width:50%;
+    height: 50px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#fff;
+  }
+@media (max-width: 700px) {
+    .tabs {
+        transform: scale(0.6);
+   }
+}
