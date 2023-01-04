@@ -73,7 +73,7 @@
       border-radius: 0 0 {{ block.settings.radius }}px 0;
     }
     .tabs, .tab, .glider, .selected_text {
-        border-radius: {{ 20 | times: 2 }}px;
+        border-radius: {{ block.settings.radius | times: 2 }}px;
     }
     .selected_text.select_list:not(:first-child) {
       border-radius: {{ block.settings.radius }}px {{ block.settings.radius }}px 0 0;
@@ -83,7 +83,7 @@
     }
 
     .select_methods {
-      border-radius: {{ block.settings.radius }}px ;
+      border-radius: {{ block.settings.radius | plus: 2 }}px ;
     }
 </style>
 <script>

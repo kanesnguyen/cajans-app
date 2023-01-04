@@ -114,10 +114,6 @@ input[id="radio-2"]:checked ~ .glider {
     height: 100%;
     opacity: 1;
 }
-.select_methods {
-    padding: 5px 0
-}
-
 .box_tab {
     margin: 20px 0 0 0;
 }
