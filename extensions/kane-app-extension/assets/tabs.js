@@ -3,29 +3,29 @@ var date = new Date();
 var delivery_date = new Date(new Date().getTime() + (24 * 60 * 60 * 1000 * 1))
 var current_date = date.getDate() + "/" + (date.getMonth() + 1);
 const getDateFormat = (from, to) => {
-	const delivery_date = (space) => { return new Date(new Date().getTime() + (24 * 60 * 60 * 1000 * space))}
+	const delivery_date = (space) => { return new Date(new Date().getTime() + (24 * 60 * 60 * 1000 * space)) }
 	return (delivery_date(from).getDate()) + "/" + (delivery_date(from).getMonth() + 1) + " - " + (delivery_date(to).getDate()) + "/" + (delivery_date(to).getMonth() + 1)
 }
 var inforShipping = {
 	method: "Standar Shipping",
 	dateOrdered: date.getDate() + "/" + (date.getMonth() + 1),
-	dateShipping: getDateFormat(5,7),
+	dateShipping: getDateFormat(5, 7),
 	quantity: 1,
 	price: 100,
 
 }
 const totalMoney = (n, price) => {
 	switch (true) {
-	  case 1:
-		return n*price;
-	  case (n >= 2 && n <= 4):
-		return n*price * 0.9;
-	  case (n >= 5 && n <= 7):
-		return n*price * 0.8;
-	  case (n >= 8 && n <= 10):
-		return n*price * 0.7;
-	  default:
-		return n * price
+		case 1:
+			return n * price;
+		case (n >= 2 && n <= 4):
+			return n * price * 0.9;
+		case (n >= 5 && n <= 7):
+			return n * price * 0.8;
+		case (n >= 8 && n <= 10):
+			return n * price * 0.7;
+		default:
+			return n * price
 	}
 }
 const renderContent = (tab) => {
@@ -63,30 +63,6 @@ const renderContent = (tab) => {
 		</div>
 	  </div>
 		`)
-
-		$(document).on("click", "#select_methods", function () {
-			$("#select_methods svg").toggleClass('select_list')
-			$("#select_methods .selected_text").toggleClass('select_list')
-			$("#select_methods .options").toggleClass('dropdown')
-		})
-
-		var selectOption = function () {
-			var data = this.getAttribute("data");
-			inforShipping.method = data;
-			$('#selected_text').html(data)
-			if(data === "Standar Shipping") {
-				inforShipping.dateShipping = getDateFormat(5,7);
-			}
-			if(data === "Fast Shipping") {
-				inforShipping.dateShipping = getDateFormat(2,4);
-			}
-			$('#delivery_day').html(inforShipping.dateShipping)
-		};
-
-		for (var i = 0; i < document.querySelectorAll("#select_methods .option").length; i++) {
-			$("#select_methods .option")[i].addEventListener('click', selectOption, false);
-		}
-		return  false;
 	}
 
 	if (tab === "tab_2") {
@@ -124,31 +100,52 @@ const renderContent = (tab) => {
 	 </div>
 	  </div>
 		`)
-		$(document).on("click", "#discount_tab", function () {
-			$("#discount_tab svg").toggleClass('select_list')
-			$("#discount_tab .selected_text").toggleClass('select_list')
-			$("#discount_tab .options").toggleClass('dropdown')
-		});
-
-		var selectOption = function () {
-			var data = this.getAttribute("data");
-			inforShipping.quantity = Number(data);
-			$('#total_product').html(data)
-			$('#count_items').html(data);
-			$('#money_total').html(`${totalMoney(data, inforShipping.price)}`);
-		};
-
-		for (var i = 0; i < document.querySelectorAll("#discount_tab .option").length; i++) {
-			$("#discount_tab .option")[i].addEventListener('click', selectOption, false);
-		}
 	}
 }
-(function() {
-	renderContent("tab_1")
-}())
-document.querySelector("#label-1").addEventListener('click', function() {
-    renderContent("tab_1")
+
+
+$(document).on("click", "#select_methods", function () {
+	$("#select_methods svg").toggleClass('select_list')
+	$("#select_methods .selected_text").toggleClass('select_list')
+	$("#select_methods .options").toggleClass('dropdown')
+})
+
+$(document).on("click", "#select_methods .option", function () {
+	inforShipping.method = $(this).attr("data");
+	$('#selected_text').html(inforShipping.method)
+	if (inforShipping.method === "Standar Shipping") {
+		inforShipping.dateShipping = getDateFormat(5, 7);
+	}
+	if (inforShipping.method === "Fast Shipping") {
+		inforShipping.dateShipping = getDateFormat(2, 4);
+	}
+	$('#delivery_day').html(inforShipping.dateShipping)
+})
+
+
+$(document).on("click", "#discount_tab", function () {
+	$("#discount_tab svg").toggleClass('select_list')
+	$("#discount_tab .selected_text").toggleClass('select_list')
+	$("#discount_tab .options").toggleClass('dropdown')
 });
-document.querySelector("#label-2").addEventListener('click', function() {
-    renderContent("tab_2")
+
+$(document).on("click", "#discount_tab .option", function () {
+	inforShipping.quantity = Number($(this).attr("data"));
+	$('#total_product').html(inforShipping.quantity)
+	$('#count_items').html(inforShipping.quantity);
+	$('#money_total').html(`${totalMoney(inforShipping.quantity, inforShipping.price)}`);
+})
+
+
+$(document).ready(function() {
+	renderContent("tab_1")
+})
+$(document).on("click", "label", function () {
+	renderContent($(this).attr("data"))
+});
+$(document).on("change keydown paste input", "input.quantity__input", function () {
+	inforShipping.quantity = $(this).val()
+	$('#total_product').html($(this).val())
+	$('#count_items').html($(this).val())
+	$('#money_total').html(`${totalMoney($(this).val(), inforShipping.price)}`);
 });
