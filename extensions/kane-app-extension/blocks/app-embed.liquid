@@ -34,7 +34,7 @@
     <span class="glider"></span>
   </div>
   </div>
-  <div id="content_tab">
+  <div id="content_tab" class="container">
     
   </div>
 </div>
@@ -75,10 +75,10 @@
     .tabs, .tab, .glider, .selected_text {
         border-radius: {{ 20 | times: 2 }}px;
     }
-    .selected_text.select_list {
-        border-radius: {{ block.settings.radius }}px {{ block.settings.radius }}px 0 0;
+    .selected_text.select_list:not(:first-child) {
+      border-radius: {{ block.settings.radius }}px {{ block.settings.radius }}px 0 0;
     }
-    .option:last-child {
+    .selected_text.select_list:last-child {
     border-radius:0 0 {{ block.settings.radius }}px {{ block.settings.radius }}px  ;
     }
 

@@ -1,15 +1,17 @@
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 
 var date = new Date();
 var delivery_date = new Date(new Date().getTime() + (24 * 60 * 60 * 1000 * 1))
-var current_date = date.getDate() + "/" + (date.getMonth() + 1);
 const getDateFormat = (from, to) => {
 	const delivery_date = (space) => { return new Date(new Date().getTime() + (24 * 60 * 60 * 1000 * space)) }
-	return (delivery_date(from).getDate()) + "/" + (delivery_date(from).getMonth() + 1) + " - " + (delivery_date(to).getDate()) + "/" + (delivery_date(to).getMonth() + 1)
+	return (monthNames[delivery_date(from).getMonth()]) + " " + (delivery_date(from).getDate()) + ", " + (date.getFullYear()) +" - "+ (monthNames[delivery_date(to).getMonth()]) + " " + (delivery_date(to).getDate())  + ", " + (date.getFullYear())
 }
 var inforShipping = {
 	method: "Standar Shipping",
-	dateOrdered: date.getDate() + "/" + (date.getMonth() + 1),
-	dateShipping: getDateFormat(5, 7),
+	dateOrdered: monthNames[date.getMonth()] + " " + (date.getDate()) + "," + (date.getFullYear()),
+	dateDelivery: getDateFormat(5, 7),
 	quantity: 1,
 	price: 100,
 
@@ -46,20 +48,21 @@ const renderContent = (tab) => {
 		</div>
 	  </div>
 	  <div class="content_tab">
-		<div class="line"></div>
 		<div class="box">
 			<h2>Order Date</h2>
 			<div class="box box_icon">
 				<svg viewBox="0 0 24 24" width="20" height="20" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
 			</div>
+			<div class="line" style="left:50%"></div>
 			<p class="day" id="current_day">${inforShipping.dateOrdered}</p>
 		</div>
 		<div class="box">
 			<h2>Delivery Date</h2>
+			<div class="line"  style="right:50%"></div>
 			<div class="box box_icon">
 				<svg viewBox="0 0 24 24" width="20" height="20" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
 			</div>
-			<p class="day" id="delivery_day">${inforShipping.dateShipping}</p>
+			<p class="day" id="delivery_day">${inforShipping.dateDelivery}</p>
 		</div>
 	  </div>
 		`)
@@ -114,12 +117,12 @@ $(document).on("click", "#select_methods .option", function () {
 	inforShipping.method = $(this).attr("data");
 	$('#selected_text').html(inforShipping.method)
 	if (inforShipping.method === "Standar Shipping") {
-		inforShipping.dateShipping = getDateFormat(5, 7);
+		inforShipping.dateDelivery = getDateFormat(5, 7);
 	}
 	if (inforShipping.method === "Fast Shipping") {
-		inforShipping.dateShipping = getDateFormat(2, 4);
+		inforShipping.dateDelivery = getDateFormat(2, 4);
 	}
-	$('#delivery_day').html(inforShipping.dateShipping)
+	$('#delivery_day').html(inforShipping.dateDelivery)
 })
 
 
@@ -137,7 +140,7 @@ $(document).on("click", "#discount_tab .option", function () {
 })
 
 
-$(document).ready(function() {
+$(document).ready(function () {
 	renderContent("tab_1")
 })
 $(document).on("click", "label", function () {
@@ -149,3 +152,23 @@ $(document).on("change keydown paste input", "input.quantity__input", function (
 	$('#count_items').html($(this).val())
 	$('#money_total').html(`${totalMoney($(this).val(), inforShipping.price)}`);
 });
+$(document).on("click", "button", function () {
+	renderContent($(this).attr("data"))
+});
+$("form").submit(function (e) {
+	e.preventDefault();
+	var settings = {
+	"url": "/cart.js",
+	"method": "POST",
+	"timeout": 0,
+	"data": {
+		attributes: {
+			orderDate: inforShipping.dateOrdered,
+			deliveryDate: inforShipping.dateDelivery,
+		}
+	}
+	};
+	$.ajax(settings).done(function (response) {
+		console.log(response);
+	});
+})
