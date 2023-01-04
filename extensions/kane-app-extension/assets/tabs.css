@@ -141,8 +141,28 @@ input[id="radio-2"]:checked ~ .glider {
     justify-content:center;
     background:#fff;
   }
-@media (max-width: 700px) {
-    .tabs {
-        transform: scale(0.6);
-   }
+  
+@media (max-width: 425px) {
+    .tab, .glider {
+        height: 80px;
+    }
+    .content_tab .line {
+        top: 40%;
+    }
+    .container {
+        max-width: 90vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .tab, .glider {
+        height: 35px;
+    }
+    .select_methods {
+        width: 100%;
+    }
+    .content_tab .line {
+        top: 34%;
+        width: 75%;
+    }
 }
